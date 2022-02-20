@@ -1,0 +1,15 @@
+{
+  "name": "com.ath.grid-building-system",
+  "version": "0.0.1",
+  "displayName": "Grid Building System",
+  "description": "A package that provides a simple grid building system.",
+  "unity": "2021.2",
+ "keywords": [
+    "Building System"
+  ],
+  "author": {
+    "name": "Tudurean Iulian",
+    "email": "tudurean.iulian@gmail.com",
+    "url": "https://github.com/Atheros21"
+  }
+}
