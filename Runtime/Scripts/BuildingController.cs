@@ -30,7 +30,7 @@ namespace ATH.HouseBuilding
         public string buildingName;
         //END 
 
-        private BuildingGrid buildingGrid;
+        private CoreGrid buildingGrid;
         private BaseInput baseInput;
         private GameObject previewObject;
         private GameObject objectForConstruction;
@@ -59,7 +59,7 @@ namespace ATH.HouseBuilding
             cellToBuildingCell = new Dictionary<Cell, BuildingCell>();
             buildingCellToCell = new Dictionary<BuildingCell, Cell>();
             goToCell = new Dictionary<GameObject, Cell>();
-            buildingGrid = new BuildingGrid(gridShape, transform.position, transform.rotation, buildingName);
+            buildingGrid = new CoreGrid(gridShape, transform.position, transform.rotation, buildingName);
             mainCamera = Camera.main;
         }
 
@@ -84,7 +84,7 @@ namespace ATH.HouseBuilding
             baseInput.Disable();
         }
 
-        private void Create(BuildingGrid targetGrid)
+        private void Create(CoreGrid targetGrid)
         {
             GameObject rootObject = new GameObject(targetGrid.GridId);
             rootObject.transform.position = targetGrid.Position;
@@ -93,13 +93,13 @@ namespace ATH.HouseBuilding
             {
                 for (int j = 0; j < targetGrid.Height; j++)
                 {
-                    if (targetGrid.GetCell(i, j) != null)
+                    if (targetGrid[i,j] != null)
                     {
                         Vector3 instatiationPosition = rootObject.transform.position + rootObject.transform.forward * i + rootObject.transform.right * j;
                         BuildingCell currentBuildingCell = Instantiate(floorPrefab, instatiationPosition, rootObject.transform.rotation, rootObject.transform).GetComponent<BuildingCell>();
-                        cellToBuildingCell.Add(targetGrid.GetCell(i, j), currentBuildingCell);
-                        buildingCellToCell.Add(currentBuildingCell, targetGrid.GetCell(i, j));
-                        goToCell.Add(currentBuildingCell.gameObject, targetGrid.GetCell(i, j));
+                        cellToBuildingCell.Add(targetGrid[i, j], currentBuildingCell);
+                        buildingCellToCell.Add(currentBuildingCell, targetGrid[i, j]);
+                        goToCell.Add(currentBuildingCell.gameObject, targetGrid[i, j]);
                     }
                 }
             }
@@ -121,7 +121,7 @@ namespace ATH.HouseBuilding
             if (useMouseInput) return;
             if (isXAxis)
             {
-                if (buildingGrid.GetCell(selectedCoord.y, selectedCoord.x + increment) == null)
+                if (buildingGrid[selectedCoord.y, selectedCoord.x + increment] == null)
                 {
                     return;
                 }
@@ -129,7 +129,7 @@ namespace ATH.HouseBuilding
             }
             else
             {
-                if (buildingGrid.GetCell(selectedCoord.y + increment, selectedCoord.x) == null)
+                if (buildingGrid[selectedCoord.y + increment, selectedCoord.x] == null)
                 {
                     return;
                 }
@@ -142,7 +142,7 @@ namespace ATH.HouseBuilding
         {
             previewObject.transform.position = GetObjectToBePlacedPosition();
             previewObject.transform.rotation =buildingGrid.Roation * currentRotation;
-            canConstruct = cellToBuildingCell[buildingGrid.GetCell(selectedCoord.y, selectedCoord.x)].CanAddAttachment(selectedAttachment);
+            canConstruct = cellToBuildingCell[buildingGrid[selectedCoord.y, selectedCoord.x]].CanAddAttachment(selectedAttachment);
             foreach (var item in previewObjectRenderes)
             {
                 item.material = canConstruct ? canConstructMat : invalidConstructMat;
@@ -157,7 +157,7 @@ namespace ATH.HouseBuilding
         }
 
         private Vector3 GetObjectToBePlacedPosition() =>
-            cellToBuildingCell[buildingGrid.GetCell(selectedCoord.y, selectedCoord.x)].transform.position + Vector3.up * kVerticalOffset;
+            cellToBuildingCell[buildingGrid[selectedCoord]].transform.position + Vector3.up * kVerticalOffset;
 
         private void HandleRaycast()
         {
@@ -170,8 +170,8 @@ namespace ATH.HouseBuilding
                 {
                     lastObjectRaycasted = hitInfo.transform;
                     Cell currentSelectedCell = goToCell[hitInfo.transform.gameObject];
-                    selectedCoord.x = currentSelectedCell.Coordinates.y;
-                    selectedCoord.y = currentSelectedCell.Coordinates.x;
+                    //selectedCoord.x = currentSelectedCell.Coordinates.y;
+                    //selectedCoord.y = currentSelectedCell.Coordinates.x;
                     UpdatePreview();
                 }
             }

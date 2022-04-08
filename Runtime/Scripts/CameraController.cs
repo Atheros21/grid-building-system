@@ -10,6 +10,7 @@ namespace ATH.HouseBuilding
         private BaseInput input;
         private bool rotate;
         private bool pan;
+        private bool verticalPan;
         private bool isEnabled = true;
         private void Awake()
         {
@@ -25,8 +26,8 @@ namespace ATH.HouseBuilding
             input.CameraController.EnableRotate.canceled += ctx => { rotate = false; Cursor.lockState = CursorLockMode.None; };
             input.CameraController.Pan.started += ctx => { pan = true; };
             input.CameraController.Pan.canceled += ctx => { pan = false; };
-            input.CameraController.VericalPan.started += ctx => { pan = true; };
-            input.CameraController.VericalPan.canceled += ctx => { pan = false; };
+            input.CameraController.VericalPan.started += ctx => { verticalPan = true; };
+            input.CameraController.VericalPan.canceled += ctx => { verticalPan = false; };
             input.CameraController.EnableCameraController.performed += ctx => { isEnabled = !isEnabled; };
         }
         private void Update()
@@ -39,7 +40,7 @@ namespace ATH.HouseBuilding
             {
                 RotateCamera();
             }
-            if (pan)
+            if (pan || verticalPan)
             {
                 PanCamera();
             }
