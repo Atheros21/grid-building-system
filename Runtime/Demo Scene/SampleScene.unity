@@ -165,7 +165,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272191306}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -5.42, y: 0, z: 3.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -349,16 +349,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e63ff835a5bbcad418a46e408ae60ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useMouseInput: 1
-  canConstructMat: {fileID: 2100000, guid: b87b1c1787ab24745a4eac12e16ebb0c, type: 2}
-  invalidConstructMat: {fileID: 2100000, guid: 150096c37712aae4688107fb1548eebf, type: 2}
-  attachmentSet: {fileID: 11400000, guid: a5853f819f4f3494c96d3ddff00976c4, type: 2}
-  buildingPartsLayer:
+  _gridView: {fileID: 0}
+  _cellsLayerMask:
     serializedVersion: 2
-    m_Bits: 1
-  floorPrefab: {fileID: 3468267545740801184, guid: 0a891948dc892dd46b93bcedfcd43596,
-    type: 3}
-  buildingName: ASD
+    m_Bits: 0
+  _mousePosition:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,6 +461,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roataionSpeed: 15
   panningSpeed: 5
+--- !u!1 &1599236621
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1599236623}
+  - component: {fileID: 1599236622}
+  m_Layer: 0
+  m_Name: BuildingController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1599236622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599236621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e63ff835a5bbcad418a46e408ae60ca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gridView: {fileID: 1926085399}
+  _cellsLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _mousePosition:
+    m_Name: Mouse Position
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 20d0476f-be56-4f39-88a8-745d86671c25
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+--- !u!4 &1599236623
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599236621}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1926085400}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1926085398
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,7 +548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c0621e07073a04ab1dc32de3eb1445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorPrefab: {fileID: 3468267545740801184, guid: 0a891948dc892dd46b93bcedfcd43596,
+  _cellView: {fileID: 5930007032064187795, guid: 4ec55aab882c400468ba65fd37182b00,
     type: 3}
 --- !u!4 &1926085400
 Transform:
@@ -496,11 +557,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1926085398}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 1599236623}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

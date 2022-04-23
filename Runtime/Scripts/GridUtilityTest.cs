@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ATH.HouseBuilding
+namespace ATH.GBS
 {
     public class GridUtilityTest
     {

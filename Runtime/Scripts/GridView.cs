@@ -1,39 +1,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ATH.HouseBuilding
+namespace ATH.GBS
 {
     public class GridView : MonoBehaviour, IGridView
     {
-        public GameObject floorPrefab;
+        [SerializeField] private CellView _cellView;
 
         private CoreGrid _grid;
+        private Dictionary<Vector2Int, ICellView> _coordinateToCellView;
+        private Dictionary<ICellView, Vector2Int> _cellViewToCoordinate;
 
-        private void Start()
+        public ICellView CellView => _cellView;
+
+        public void ChangeCellsState(List<Vector2Int> coordinates, CellViewState state)
         {
-            _grid = GridUtilityTest.GetHGridShaped();
-            Render(_grid);
+            foreach (var pos in coordinates)
+            {
+                if (!_coordinateToCellView.ContainsKey(pos)) continue;
+
+                _coordinateToCellView[pos].SetState(state);
+            }
         }
 
-        public void Highlight(List<Vector2Int> coordinates, CoreGrid grid, object style)
+        public Vector2Int? GetCellCoordinate(ICellView cellView)
         {
-            throw new System.NotImplementedException();
+            if (!_cellViewToCoordinate.ContainsKey(cellView)) return null;
+
+            return _cellViewToCoordinate[cellView];
         }
 
         public void Render(CoreGrid grid)
         {
-            GameObject rootObject = new GameObject(grid.GridId);
+            _coordinateToCellView = new Dictionary<Vector2Int, ICellView>();
+            _cellViewToCoordinate = new Dictionary<ICellView, Vector2Int>();
+
+            var rootObject = new GameObject(grid.GridId);
+            rootObject.transform.SetParent(transform);
             rootObject.transform.position = grid.Position;
             rootObject.transform.rotation = grid.Roation;
-            for (int i = 0; i < grid.Width; i++)
+
+            for (var x = 0;  x < grid.Width; x++)
             {
-                for (int j = 0; j < grid.Height; j++)
+                for (var y = 0; y < grid.Height; y++)
                 {
-                    if (grid[i, j] != null)
-                    {
-                        Vector3 instatiationPosition = rootObject.transform.position + rootObject.transform.forward * i + rootObject.transform.right * j;
-                        Instantiate(floorPrefab, instatiationPosition, rootObject.transform.rotation, rootObject.transform);
-                    }
+                    if (grid[x, y] == null) continue;
+
+                    var newView = CellView.Create(CellViewState.Normal, grid.Position+new Vector3(x,0,y),grid.Roation, rootObject.transform);
+                    _coordinateToCellView.Add(new Vector2Int(x, y), newView);
+                    _cellViewToCoordinate.Add(newView, new Vector2Int(x, y));
                 }
             }
         }
