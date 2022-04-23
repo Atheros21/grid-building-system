@@ -1,6 +1,6 @@
 {
-    "name": "grid-building-systtem",
-    "rootNamespace": "",
+    "name": "ath.grid-building-systtem",
+    "rootNamespace": "ATH",
     "references": [
         "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
